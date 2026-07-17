@@ -1,0 +1,24 @@
+{
+  "originHash" : "038f4503cd13dbbe02af114eb79927870fdb25c02f34cd285bdc5a36932907c7",
+  "pins" : [
+    {
+      "identity" : "wwfileservice",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWFileService",
+      "state" : {
+        "revision" : "992a2476489f360e298bb7ebe86608eda604f334",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "wwsimplevideoplayerviewui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWSimpleVideoPlayerViewUI",
+      "state" : {
+        "revision" : "5f2845e23d11b0d115827d25977ac2d6a7a6540e",
+        "version" : "1.3.2"
+      }
+    }
+  ],
+  "version" : 3
+}
