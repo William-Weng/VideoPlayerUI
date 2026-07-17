@@ -120,8 +120,8 @@ private extension VideoLibraryViewModel {
                 for try await videoItem in group {
                     if let videoItem { result.append(videoItem) }
                 }
-
-                return result
+                
+                return result.sorted { $0.fileName < $1.fileName }
             }
         } catch {
             return []
