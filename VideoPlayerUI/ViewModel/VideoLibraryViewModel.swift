@@ -51,7 +51,10 @@ extension VideoLibraryViewModel {
     func loadVideosFromDocumentsRoot() {
         selectedFolderName = ""
         currentFolderPathText = rootFolder.lastPathComponent
-        items = loadVideoItems(at: rootFolder, preserveFavoriteStateFrom: items)
+        
+        Task {
+            items = await loadVideoItems(at: rootFolder, preserveFavoriteStateFrom: items)
+        }
     }
     
     /// 重新整理資料夾與影片清單
@@ -74,7 +77,9 @@ extension VideoLibraryViewModel {
         
         selectedFolderName = folderName
         currentFolderPathText = "\(rootFolder.lastPathComponent)/\(folderName)"
-        items = loadVideoItems(at: targetFolderURL, preserveFavoriteStateFrom: items)
+        Task {
+            items = await loadVideoItems(at: targetFolderURL, preserveFavoriteStateFrom: items)
+        }
     }
 }
 
@@ -97,16 +102,26 @@ private extension VideoLibraryViewModel {
     ///   - folderURL: 要掃描的資料夾 URL
     ///   - oldItems: 先前的影片清單，用來延續收藏狀態
     /// - Returns: 新的影片項目陣列
-    func loadVideoItems(at folderURL: URL, preserveFavoriteStateFrom oldItems: [VideoItem]) -> [VideoItem] {
+    func loadVideoItems(at folderURL: URL, preserveFavoriteStateFrom oldItems: [VideoItem]) async -> [VideoItem] {
         
-        let favoriteMap = Dictionary(uniqueKeysWithValues: oldItems.map { ($0.url.path, $0.isFavorite) })
+        let favoriteMap = Dictionary(uniqueKeysWithValues: oldItems.map { ($0.url.path, $0.isFavorite) } )
         
         do {
             let items = try WWFileService.fileItems(at: folderURL, allowedExtensions: allowedExtensions, skipsHiddenFiles: false)
-            
-            return items.compactMap { item in
-                let isFavorite = favoriteMap[item.url.path] ?? false
-                return .init(url: item.url, fileName: item.url.lastPathComponent, duration: 123.45, createdDate: item.createdDate, fileSize: item.fileSize, isFavorite: isFavorite)
+
+            return try await withThrowingTaskGroup(of: VideoItem?.self) { group in
+                
+                var result: [VideoItem] = []
+                
+                for item in items {
+                    group.addTask { [self] in await videoItemTask(with: item, favoriteMap: favoriteMap) }
+                }
+                
+                for try await videoItem in group {
+                    if let videoItem { result.append(videoItem) }
+                }
+
+                return result
             }
         } catch {
             return []
@@ -130,5 +145,20 @@ private extension VideoLibraryViewModel {
             selectedFolderName = ""
             loadVideosFromDocumentsRoot()
         }
+    }
+    
+    /// 針對單一檔案建立對應的 VideoItem
+    /// - Parameters:
+    ///   - item: WWFileService 回傳的檔案資訊物件
+    ///   - favoriteMap: 以檔案路徑為 key 的「是否收藏」對應表
+    /// - Returns: 若成功取得影片資訊就回傳 VideoItem，失敗則為 nil
+    func videoItemTask(with item: FileServiceItem, favoriteMap: [String : Bool]) async -> VideoItem? {
+        
+        let info = try? await WWFileService.videoInformation(for: item.url)
+        let isFavorite = favoriteMap[item.url.path] ?? false
+
+        guard let info else { return nil }
+
+        return .init(url: item.url, fileName: item.url.lastPathComponent, duration: info.durationSeconds, createdDate: item.createdDate, fileSize: item.fileSize, isFavorite: isFavorite)
     }
 }
