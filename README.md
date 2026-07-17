@@ -11,7 +11,7 @@
 
 ## [運行畫面](https://peterpanswift.github.io/iphone-bezels/)
 
-![Example](https://github.com/user-attachments/assets/725f69e5-df1e-4e21-b655-e9fdc36a44cc)
+https://github.com/user-attachments/assets/f52f9582-435e-4b2d-a57a-7f2e3b8242f3
 
 ## Info.plist
 - 記得要設定，在Finder / iPhone才能拉影片進去，單層資料夾支援
