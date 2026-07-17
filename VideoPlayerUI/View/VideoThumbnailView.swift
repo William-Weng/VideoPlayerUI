@@ -29,7 +29,7 @@ struct VideoThumbnailView: View {
             }
         }
         .task(id: url) {
-            image = await VideoThumbnailService.shared.thumbnail(for: url, at: 1.0)
+            image = await VideoThumbnailService.shared.thumbnail(for: url, at: 10.0)
         }
     }
 }

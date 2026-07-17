@@ -24,7 +24,7 @@ struct VideoPlayerPage: View {
         WWSimpleVideoPlayerViewUI<VideoItem>(source: $item, isAutoplay: $isAutoplay, configure: configure)
             .frame(maxWidth: .infinity)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .ignoresSafeArea()
+            .ignoresSafeArea(.container, edges: .top)
             .toolbar(showsChrome ? .visible : .hidden, for: .navigationBar)
             .toolbar {
                 toolBarTitleView

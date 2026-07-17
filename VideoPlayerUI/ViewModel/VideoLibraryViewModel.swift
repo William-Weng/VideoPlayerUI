@@ -12,24 +12,44 @@ import WWFileService
 @Observable
 final class VideoLibraryViewModel {
     
+    @ObservationIgnored
     let rootFolder: URL = .documentsDirectory           // Documents 根目錄
     
     var items: [VideoItem] = []                         // 目前顯示的影片項目
     var folders: [VideoFolder] = []                     // Documents 底下的子資料夾
-    var selectedFolderName: String = ""                 // 目前選取的資料夾名稱
-    var currentFolderPathText: String                   // 目前畫面上顯示的資料夾路徑文字
+    var selectedFolderURL: URL                          // 目前選取的資料夾URL
     
     // 允許掃描的影片副檔名
+    @ObservationIgnored
     private let allowedExtensions: Set<String> = ["mp4", "mov", "m4v", "avi", "mkv"]
     
-    /// 初始化
     init() {
-        currentFolderPathText = rootFolder.lastPathComponent
+        selectedFolderURL = rootFolder
     }
 }
 
 // MARK: - 公開屬性
 extension VideoLibraryViewModel {
+    
+    /// 目前選取的資料夾名稱
+    var currentFolderPathText: String {
+                
+        if selectedFolderURL != rootFolder {
+            return "\(rootFolder.lastPathComponent)/\(selectedFolderURL.lastPathComponent)"
+        }
+        
+        return rootFolder.lastPathComponent
+    }
+    
+    /// 目前畫面上顯示的資料夾路徑文字
+    var selectedFolderName: String {
+                
+        if selectedFolderURL != rootFolder {
+            return selectedFolderURL.lastPathComponent
+        }
+
+        return rootFolder.lastPathComponent
+    }
     
     /// 目前所有已收藏的影片
     var favoriteItems: [VideoItem] {
@@ -49,8 +69,8 @@ extension VideoLibraryViewModel {
     
     /// 讀取 Documents 根目錄底下的影片
     func loadVideosFromDocumentsRoot() {
-        selectedFolderName = ""
-        currentFolderPathText = rootFolder.lastPathComponent
+        
+        selectedFolderURL = rootFolder
         
         Task {
             items = await loadVideoItems(at: rootFolder, preserveFavoriteStateFrom: items)
@@ -62,7 +82,7 @@ extension VideoLibraryViewModel {
         
         loadFoldersFromDocuments()
         
-        if selectedFolderName.isEmpty {
+        if selectedFolderURL == rootFolder {
             loadVideosFromDocumentsRoot()
         } else {
             reloadSelectedFolderIfNeeded()
@@ -74,9 +94,8 @@ extension VideoLibraryViewModel {
     func loadVideosFromDocumentsSubfolder(named folderName: String) {
         
         let targetFolderURL = rootFolder.appendingPathComponent(folderName, isDirectory: true)
+        selectedFolderURL = targetFolderURL
         
-        selectedFolderName = folderName
-        currentFolderPathText = "\(rootFolder.lastPathComponent)/\(folderName)"
         Task {
             items = await loadVideoItems(at: targetFolderURL, preserveFavoriteStateFrom: items)
         }
@@ -139,10 +158,8 @@ private extension VideoLibraryViewModel {
         if folders.contains(where: { $0.name == selectedFolderName }) {
             loadVideosFromDocumentsSubfolder(named: selectedFolderName)
         } else if let firstFolder = folders.first {
-            selectedFolderName = firstFolder.name
             loadVideosFromDocumentsSubfolder(named: firstFolder.name)
         } else {
-            selectedFolderName = ""
             loadVideosFromDocumentsRoot()
         }
     }
