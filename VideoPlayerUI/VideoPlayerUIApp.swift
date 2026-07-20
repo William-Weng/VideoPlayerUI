@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct VideoPlayerUIApp: App {
+    
     var body: some Scene {
         WindowGroup {
             Content()

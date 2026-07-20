@@ -10,14 +10,17 @@ import SwiftUI
 // MARK: - Root TabView
 struct Content: View {
 
-    @State private var viewModel = VideoLibraryViewModel()
     @State private var selectedTab: MainTab = .videos
+    @State private var itemViewModel: VideoLibraryViewModel
+    @State private var favoriteViewModel: VideoFavoriteViewModel
 
+    private let favoriteStore: FavoriteStoreService
+    
     var body: some View {
         
         TabView(selection: $selectedTab) {
             NavigationStack {
-                VideoListPage(viewModel: viewModel)
+                VideoListPage(viewModel: itemViewModel)
             }
             .tabItem {
                 Label("Player", systemImage: "play.square")
@@ -25,7 +28,7 @@ struct Content: View {
             .tag(MainTab.videos)
 
             NavigationStack {
-                FavoriteListPage(viewModel: viewModel)
+                FavoriteListPage(viewModel: favoriteViewModel)
             }
             .tabItem {
                 Label("Favorite", systemImage: "heart")
@@ -33,9 +36,12 @@ struct Content: View {
             .tag(MainTab.favorites)
         }
         .tint(.accentColor)
-        .task {
-            print(URL.documentsDirectory)
-        }
+    }
+    
+    init() {
+        favoriteStore = FavoriteStoreService(fileUrl: Costant.jsonFileUrl)
+        _itemViewModel = .init(initialValue: .init(favoriteStore: favoriteStore))
+        _favoriteViewModel = .init(initialValue: .init(favoriteStore: favoriteStore))
     }
 }
 

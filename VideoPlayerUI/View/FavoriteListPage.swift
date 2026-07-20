@@ -10,17 +10,24 @@ import SwiftUI
 // MARK: - Favorite Page
 struct FavoriteListPage: View {
 
-    @State var viewModel: VideoLibraryViewModel
+    @State var viewModel: VideoFavoriteViewModel
 
     var body: some View {
         Group {
-            if viewModel.favoriteItems.isEmpty {
+            if viewModel.items.isEmpty {
                 emptyItemView
             } else {
                 itemView
             }
         }
+        .task {
+            await viewModel.reload()
+        }
         .navigationTitle("我的收藏")
+    }
+    
+    init(viewModel: VideoFavoriteViewModel) {
+        self.viewModel = viewModel
     }
 }
 
@@ -43,7 +50,8 @@ private extension FavoriteListPage {
         ScrollView {
             
             LazyVStack(spacing: 16) {
-                ForEach(viewModel.favoriteItems) { item in
+                
+                ForEach(viewModel.items) { item in
                     NavigationLink {
                         VideoPlayerPage(item: item, isAutoplay: false)
                             .toolbar(.hidden, for: .tabBar)

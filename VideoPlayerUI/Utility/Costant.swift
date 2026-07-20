@@ -7,6 +7,19 @@
 
 import SwiftUI
 
+/// 常用常數
+enum Costant {
+    
+    // 允許掃描的影片副檔名
+    static let allowedExtensions: Set<String> = ["mp4", "mov", "m4v", "avi", "mkv"]
+    
+    // Documents 根目錄
+    static let rootFolder: URL = .documentsDirectory
+    
+    // 記錄書籤的JSON檔案位置
+    static let jsonFileUrl = Costant.rootFolder.appendingPathComponent("favorites.json")
+}
+
 /// 主畫面分頁
 enum MainTab: Hashable {
     case videos     // 影片列表分頁

@@ -123,8 +123,3 @@ private extension VideoCardView {
     }
 }
 
-#Preview {
-    VideoCardView(item: .init(url: .documentsDirectory, fileName: "", duration: 100, createdDate: .now, fileSize: 1024, videoSize: .init(width: 19200, height: 1440), isFavorite: true), onFavorite: {
-        
-    })
-}

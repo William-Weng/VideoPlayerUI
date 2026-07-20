@@ -1,13 +1,13 @@
 {
-  "originHash" : "a80a377a5df17bfded003928d84cf6b46c4237c0a4edb38da8d2dc00e6fd65b3",
+  "originHash" : "038f4503cd13dbbe02af114eb79927870fdb25c02f34cd285bdc5a36932907c7",
   "pins" : [
     {
       "identity" : "wwfileservice",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWFileService",
       "state" : {
-        "revision" : "992a2476489f360e298bb7ebe86608eda604f334",
-        "version" : "1.1.0"
+        "revision" : "875e7207ca9c4e9c131a6bcc36322bfa2a16fcf9",
+        "version" : "1.2.2"
       }
     },
     {
