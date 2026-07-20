@@ -18,7 +18,8 @@ struct VideoItem: WWSimpleVideoPlayerDataSource {
     let duration: TimeInterval?
     let createdDate: Date?
     let fileSize: Int64?
-
+    let videoSize: CGSize
+    
     var isFavorite: Bool
     
     /// 建立影片項目
@@ -28,13 +29,15 @@ struct VideoItem: WWSimpleVideoPlayerDataSource {
     ///   - duration: 影片長度，單位為秒
     ///   - createdDate: 建立日期
     ///   - fileSize: 檔案大小，單位為 bytes
+    ///   - fileSize: 影片尺寸，單位為 pixal
     ///   - isFavorite: 是否已收藏
-    init(url: URL, fileName: String, duration: TimeInterval?, createdDate: Date?, fileSize: Int64?, isFavorite: Bool) {
+    init(url: URL, fileName: String, duration: TimeInterval?, createdDate: Date?, fileSize: Int64?, videoSize: CGSize, isFavorite: Bool) {
         self.url = url
         self.fileName = fileName
         self.duration = duration
         self.createdDate = createdDate
         self.fileSize = fileSize
+        self.videoSize = videoSize
         self.isFavorite = isFavorite
     }
 }
@@ -48,4 +51,11 @@ struct VideoFolder: Identifiable, Hashable {
     let url: URL        // 資料夾 URL
 }
 
-
+// MARK: - 公開屬性 (VideoItem)
+extension VideoItem {
+    
+    /// 影片的尺寸格式
+    var sizeType: SizeType {
+        .init(size: videoSize)
+    }
+}

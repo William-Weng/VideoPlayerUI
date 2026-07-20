@@ -173,9 +173,9 @@ private extension VideoLibraryViewModel {
         
         let info = try? await WWFileService.videoInformation(for: item.url)
         let isFavorite = favoriteMap[item.url.path] ?? false
-
+        
         guard let info else { return nil }
-
-        return .init(url: item.url, fileName: item.url.lastPathComponent, duration: info.durationSeconds, createdDate: item.createdDate, fileSize: item.fileSize, isFavorite: isFavorite)
+        
+        return .init(url: item.url, fileName: item.url.lastPathComponent, duration: info.durationSeconds, createdDate: item.createdDate, fileSize: item.fileSize, videoSize: info.size, isFavorite: isFavorite)
     }
 }

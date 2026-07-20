@@ -43,7 +43,7 @@ private extension VideoCardView {
             VideoThumbnailView(url: item.url)
                 .frame(width: 96, height: 64)
                 .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-
+            
             fileMetaView
             
             Spacer(minLength: 0)
@@ -90,6 +90,18 @@ private extension VideoCardView {
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
         .foregroundStyle(.primary)
+        .overlay(alignment: .bottomTrailing) {
+            Text(item.sizeType.title)
+                .font(.caption.bold())
+                .foregroundStyle(item.sizeType.foregroundColor)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 8)
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(item.sizeType.backgroundColor)
+                )
+                .offset(x: -8, y: -8)
+        }
     }
 }
 
@@ -111,3 +123,8 @@ private extension VideoCardView {
     }
 }
 
+#Preview {
+    VideoCardView(item: .init(url: .documentsDirectory, fileName: "", duration: 100, createdDate: .now, fileSize: 1024, videoSize: .init(width: 19200, height: 1440), isFavorite: true), onFavorite: {
+        
+    })
+}
