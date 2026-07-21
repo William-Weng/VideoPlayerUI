@@ -12,7 +12,7 @@ import WWFileService
 struct VideoThumbnailView: View {
     
     let url: URL                        // 影片的 URL
-    
+
     @State private var image: UIImage?  // 目前載入完成的縮圖
     
     var body: some View {
@@ -29,7 +29,7 @@ struct VideoThumbnailView: View {
             }
         }
         .task(id: url) {
-            image = await VideoThumbnailService.shared.thumbnail(for: url, at: 10.0)
+            image = await VideoThumbnailService.shared.thumbnail(for: url, at: Constant.thumbnailDurtion)
         }
     }
 }

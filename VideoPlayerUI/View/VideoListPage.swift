@@ -115,7 +115,7 @@ private extension VideoListPage {
             
             HStack(spacing: 10) {
                 
-                folderChip(title: Costant.rootFolder.lastPathComponent, isSelected: viewModel.selectedFolderURL == Costant.rootFolder , action: {
+                folderChip(title: Constant.rootFolder.lastPathComponent, isSelected: viewModel.selectedFolderURL == Constant.rootFolder , action: {
                     viewModel.loadVideosFromDocumentsRoot()
                 })
                 

@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8104545D300DBFAB00A561BF /* WWSimpleVideoPlayerViewUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8104545C300DBFAB00A561BF /* WWSimpleVideoPlayerViewUI */; };
-		81045460300DC5A700A561BF /* WWSimpleVideoPlayerViewUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8104545F300DC5A700A561BF /* WWSimpleVideoPlayerViewUI */; };
 		810454DF300E22D200A561BF /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 810454DE300E22D200A561BF /* WWFileService */; };
+		811DC356300F01A900DFDD69 /* WWSimpleVideoPlayerViewUI in Frameworks */ = {isa = PBXBuildFile; productRef = 811DC355300F01A900DFDD69 /* WWSimpleVideoPlayerViewUI */; };
+		811DC359300F06CE00DFDD69 /* WWSimpleVideoPlayerViewUI in Frameworks */ = {isa = PBXBuildFile; productRef = 811DC358300F06CE00DFDD69 /* WWSimpleVideoPlayerViewUI */; };
 		81406A123008DFF400BD511B /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 81406A113008DFF400BD511B /* WWFileService */; };
 		81F50FD3300E2B27008AFDA8 /* WWFileService in Frameworks */ = {isa = PBXBuildFile; productRef = 81F50FD2300E2B27008AFDA8 /* WWFileService */; };
 /* End PBXBuildFile section */
@@ -44,10 +45,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				811DC359300F06CE00DFDD69 /* WWSimpleVideoPlayerViewUI in Frameworks */,
 				810454DF300E22D200A561BF /* WWFileService in Frameworks */,
 				8104545D300DBFAB00A561BF /* WWSimpleVideoPlayerViewUI in Frameworks */,
-				81045460300DC5A700A561BF /* WWSimpleVideoPlayerViewUI in Frameworks */,
 				81406A123008DFF400BD511B /* WWFileService in Frameworks */,
+				811DC356300F01A900DFDD69 /* WWSimpleVideoPlayerViewUI in Frameworks */,
 				81F50FD3300E2B27008AFDA8 /* WWFileService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,9 +95,10 @@
 			packageProductDependencies = (
 				81406A113008DFF400BD511B /* WWFileService */,
 				8104545C300DBFAB00A561BF /* WWSimpleVideoPlayerViewUI */,
-				8104545F300DC5A700A561BF /* WWSimpleVideoPlayerViewUI */,
 				810454DE300E22D200A561BF /* WWFileService */,
 				81F50FD2300E2B27008AFDA8 /* WWFileService */,
+				811DC355300F01A900DFDD69 /* WWSimpleVideoPlayerViewUI */,
+				811DC358300F06CE00DFDD69 /* WWSimpleVideoPlayerViewUI */,
 			);
 			productName = VideoPlayerUI;
 			productReference = 8140699D3008868E00BD511B /* VideoPlayerUI.app */;
@@ -126,8 +129,8 @@
 			mainGroup = 814069943008868E00BD511B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				8104545E300DC5A700A561BF /* XCRemoteSwiftPackageReference "WWSimpleVideoPlayerViewUI" */,
 				81F50FD1300E2B27008AFDA8 /* XCRemoteSwiftPackageReference "WWFileService" */,
+				811DC357300F06CE00DFDD69 /* XCRemoteSwiftPackageReference "WWSimpleVideoPlayerViewUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8140699E3008868E00BD511B /* Products */;
@@ -287,7 +290,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260720;
+				CURRENT_PROJECT_VERSION = 20260721;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -304,7 +307,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.VideoPlayerUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -327,7 +330,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260720;
+				CURRENT_PROJECT_VERSION = 20260721;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -344,7 +347,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.VideoPlayerUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -385,12 +388,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8104545E300DC5A700A561BF /* XCRemoteSwiftPackageReference "WWSimpleVideoPlayerViewUI" */ = {
+		811DC357300F06CE00DFDD69 /* XCRemoteSwiftPackageReference "WWSimpleVideoPlayerViewUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWSimpleVideoPlayerViewUI";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.2;
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.3.3;
 			};
 		};
 		81F50FD1300E2B27008AFDA8 /* XCRemoteSwiftPackageReference "WWFileService" */ = {
@@ -408,14 +411,18 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = WWSimpleVideoPlayerViewUI;
 		};
-		8104545F300DC5A700A561BF /* WWSimpleVideoPlayerViewUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8104545E300DC5A700A561BF /* XCRemoteSwiftPackageReference "WWSimpleVideoPlayerViewUI" */;
-			productName = WWSimpleVideoPlayerViewUI;
-		};
 		810454DE300E22D200A561BF /* WWFileService */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WWFileService;
+		};
+		811DC355300F01A900DFDD69 /* WWSimpleVideoPlayerViewUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WWSimpleVideoPlayerViewUI;
+		};
+		811DC358300F06CE00DFDD69 /* WWSimpleVideoPlayerViewUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 811DC357300F06CE00DFDD69 /* XCRemoteSwiftPackageReference "WWSimpleVideoPlayerViewUI" */;
+			productName = WWSimpleVideoPlayerViewUI;
 		};
 		81406A113008DFF400BD511B /* WWFileService */ = {
 			isa = XCSwiftPackageProductDependency;

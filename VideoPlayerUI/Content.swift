@@ -13,7 +13,7 @@ struct Content: View {
     @State private var selectedTab: MainTab = .videos
     @State private var itemViewModel: VideoLibraryViewModel
     @State private var favoriteViewModel: VideoFavoriteViewModel
-
+    
     private let favoriteStore: FavoriteStoreService
     
     var body: some View {
@@ -36,10 +36,11 @@ struct Content: View {
             .tag(MainTab.favorites)
         }
         .tint(.accentColor)
+        .environment(favoriteStore)
     }
     
     init() {
-        favoriteStore = FavoriteStoreService(fileUrl: Costant.jsonFileUrl)
+        favoriteStore = FavoriteStoreService(baseUrl: Constant.rootFolder, filename: Constant.favoriteFileName)
         _itemViewModel = .init(initialValue: .init(favoriteStore: favoriteStore))
         _favoriteViewModel = .init(initialValue: .init(favoriteStore: favoriteStore))
     }

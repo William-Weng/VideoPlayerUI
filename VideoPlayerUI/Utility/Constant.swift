@@ -1,14 +1,14 @@
 //
-//  Costant.swift
+//  Constant.swift
 //  VideoPlayerUI
 //
-//  Created by iOS on 2026/7/17.
+//  Created by William.Weng on 2026/7/17.
 //
 
 import SwiftUI
 
 /// 常用常數
-enum Costant {
+enum Constant {
     
     // 允許掃描的影片副檔名
     static let allowedExtensions: Set<String> = ["mp4", "mov", "m4v", "avi", "mkv"]
@@ -16,8 +16,11 @@ enum Costant {
     // Documents 根目錄
     static let rootFolder: URL = .documentsDirectory
     
-    // 記錄書籤的JSON檔案位置
-    static let jsonFileUrl = Costant.rootFolder.appendingPathComponent("favorites.json")
+    // 記錄書籤的JSON檔案名稱
+    static let favoriteFileName = "Favorites.json"
+    
+    // 取得在第幾秒取得縮圖
+    static let thumbnailDurtion: TimeInterval = 10.0
 }
 
 /// 主畫面分頁

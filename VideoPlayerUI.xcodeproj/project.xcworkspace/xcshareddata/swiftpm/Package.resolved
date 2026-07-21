@@ -1,5 +1,5 @@
 {
-  "originHash" : "038f4503cd13dbbe02af114eb79927870fdb25c02f34cd285bdc5a36932907c7",
+  "originHash" : "a80a377a5df17bfded003928d84cf6b46c4237c0a4edb38da8d2dc00e6fd65b3",
   "pins" : [
     {
       "identity" : "wwfileservice",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWSimpleVideoPlayerViewUI",
       "state" : {
-        "revision" : "5f2845e23d11b0d115827d25977ac2d6a7a6540e",
-        "version" : "1.3.2"
+        "revision" : "5418b170705aef83bed54c0d5859e67ab1860946",
+        "version" : "1.3.3"
       }
     }
   ],

@@ -13,6 +13,9 @@ struct VideoCardView: View {
     let item: VideoItem         // 影片資料
     var onFavorite: () -> Void  // 點擊收藏按鈕時的動作
     
+    @Environment(FavoriteStoreService.self)
+    private var favoriteStore
+    
     var body: some View {
         
         VStack(spacing: 0) {
@@ -38,7 +41,9 @@ private extension VideoCardView {
     /// 上方內容區塊，包含縮圖、檔名、檔案資訊與收藏按鈕
     var topHeader: some View {
         
-        HStack(alignment: .top, spacing: 12) {
+        let isFavorite = favoriteStore.contains(item.url)
+        
+        return HStack(alignment: .top, spacing: 12) {
             
             VideoThumbnailView(url: item.url)
                 .frame(width: 96, height: 64)
@@ -49,9 +54,9 @@ private extension VideoCardView {
             Spacer(minLength: 0)
 
             Button(action: onFavorite) {
-                Image(systemName: item.isFavorite ? "heart.fill" : "heart")
+                Image(systemName: isFavorite ? "heart.fill" : "heart")
                     .font(.title3)
-                    .foregroundStyle(item.isFavorite ? .red : .secondary)
+                    .foregroundStyle(isFavorite ? .red : .secondary)
                     .frame(width: 36, height: 36)
                     .background(Color(uiColor: .tertiarySystemBackground), in: Circle())
             }

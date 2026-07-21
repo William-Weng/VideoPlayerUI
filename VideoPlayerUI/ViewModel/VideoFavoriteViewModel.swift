@@ -108,7 +108,7 @@ private extension VideoFavoriteViewModel {
     func videoFavoriteTask(with url: URL) async -> VideoItem? {
         
         guard let info = try? await WWFileService.videoInformation(for: url),
-              let item = WWFileService.fileItem(at: url, allowedExtensions: Costant.allowedExtensions, skipsHiddenFiles: true)
+              let item = WWFileService.fileItem(at: url, allowedExtensions: Constant.allowedExtensions, skipsHiddenFiles: true)
         else {
             return nil
         }

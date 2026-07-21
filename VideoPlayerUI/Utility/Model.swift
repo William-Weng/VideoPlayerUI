@@ -54,10 +54,9 @@ struct VideoFolder: Identifiable, Hashable {
 /// 收藏資料的純狀態模型
 ///
 /// 這個 struct 專門負責「收藏事實」的持久化結構，不帶任何觀察或 UI 邏輯，方便用 Codable 直接編解碼成 JSON。
-/// key 為影片的 `URL`，value 為加入收藏的時間。
+/// key 為影片的 `相對路徑`，value 為加入收藏的時間。
 struct FavoriteStoreState: Codable {
-    
-    var favorite: [URL: Date] = [:]
+    var favorite: [String: Date] = [:]   // key = Documents 相對路徑
 }
 
 // MARK: - 公開屬性 (VideoItem)

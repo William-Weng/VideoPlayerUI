@@ -11,7 +11,7 @@ import SwiftUI
 struct FavoriteListPage: View {
 
     @State var viewModel: VideoFavoriteViewModel
-
+    
     var body: some View {
         Group {
             if viewModel.items.isEmpty {

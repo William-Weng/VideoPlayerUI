@@ -11,7 +11,7 @@ import WWFileService
 /// 影片列表頁的資料與狀態管理
 @Observable
 final class VideoLibraryViewModel {
-        
+    
     var items: [VideoItem] = []                         // 目前顯示的影片項目
     var folders: [VideoFolder] = []                     // Documents 底下的子資料夾
     var selectedFolderURL: URL                          // 目前選取的資料夾URL
@@ -26,8 +26,10 @@ final class VideoLibraryViewModel {
     ///
     /// - Parameter favoriteStore: 用來讀取與更新收藏狀態的服務物件，會在載入 `items` 後被用來同步 `isFavorite`
     init(favoriteStore: FavoriteStoreService) {
-        selectedFolderURL = Costant.rootFolder
+        selectedFolderURL = Constant.rootFolder
         self.favoriteStore = favoriteStore
+        
+        try? favoriteStore.load()
     }
 }
 
@@ -37,21 +39,21 @@ extension VideoLibraryViewModel {
     /// 目前選取的資料夾名稱
     var currentFolderPathText: String {
                 
-        if selectedFolderURL != Costant.rootFolder {
-            return "\(Costant.rootFolder.lastPathComponent)/\(selectedFolderURL.lastPathComponent)"
+        if selectedFolderURL != Constant.rootFolder {
+            return "\(Constant.rootFolder.lastPathComponent)/\(selectedFolderURL.lastPathComponent)"
         }
         
-        return Costant.rootFolder.lastPathComponent
+        return Constant.rootFolder.lastPathComponent
     }
     
     /// 目前畫面上顯示的資料夾路徑文字
     var selectedFolderName: String {
                 
-        if selectedFolderURL != Costant.rootFolder {
+        if selectedFolderURL != Constant.rootFolder {
             return selectedFolderURL.lastPathComponent
         }
 
-        return Costant.rootFolder.lastPathComponent
+        return Constant.rootFolder.lastPathComponent
     }
     
     /// 目前所有已收藏的影片
@@ -83,7 +85,7 @@ extension VideoLibraryViewModel {
     
     /// 讀取 Documents 根目錄底下的影片
     func loadVideosFromDocumentsRoot() {
-        loadVideo(from: Costant.rootFolder)
+        loadVideo(from: Constant.rootFolder)
     }
     
     /// 重新整理資料夾與影片清單
@@ -91,7 +93,7 @@ extension VideoLibraryViewModel {
         
         loadFoldersFromDocuments()
         
-        if selectedFolderURL == Costant.rootFolder {
+        if selectedFolderURL == Constant.rootFolder {
             loadVideosFromDocumentsRoot()
         } else {
             reloadSelectedFolderIfNeeded()
@@ -101,7 +103,7 @@ extension VideoLibraryViewModel {
     /// 讀取指定子資料夾底下的影片
     /// - Parameter folderName: 子資料夾名稱
     func loadVideosFromDocumentsSubfolder(named folderName: String) {
-        let targetFolderURL = Costant.rootFolder.appendingPathComponent(folderName, isDirectory: true)
+        let targetFolderURL = Constant.rootFolder.appendingPathComponent(folderName, isDirectory: true)
         loadVideo(from: targetFolderURL)
     }
 }
@@ -113,7 +115,7 @@ private extension VideoLibraryViewModel {
     func loadFoldersFromDocuments() {
         
         do {
-            let urls = try WWFileService.folderUrls(at: Costant.rootFolder, skipsHiddenFiles: true)
+            let urls = try WWFileService.folderUrls(at: Constant.rootFolder, skipsHiddenFiles: true)
             folders = urls.map { VideoFolder(name: $0.lastPathComponent, url: $0) }
         } catch {
             folders = []
@@ -130,8 +132,8 @@ private extension VideoLibraryViewModel {
         let favoriteMap = Dictionary(uniqueKeysWithValues: oldItems.map { ($0.url.path, $0.isFavorite) } )
         
         do {
-            let items = try WWFileService.fileItems(at: folderURL, allowedExtensions: Costant.allowedExtensions, skipsHiddenFiles: false)
-
+            let items = try WWFileService.fileItems(at: folderURL, allowedExtensions: Constant.allowedExtensions, skipsHiddenFiles: false)
+            
             return try await withThrowingTaskGroup(of: VideoItem?.self) { group in
                 
                 var result: [VideoItem] = []
@@ -174,7 +176,7 @@ private extension VideoLibraryViewModel {
     ///   - favoriteMap: 以檔案路徑為 key 的「是否收藏」對應表
     /// - Returns: 若成功取得影片資訊就回傳 VideoItem，失敗則為 nil
     func videoItemTask(with item: FileServiceItem, favoriteMap: [String : Bool]) async -> VideoItem? {
-                
+        
         guard let info = try? await WWFileService.videoInformation(for: item.url) else { return nil }
         
         let isFavorite = favoriteMap[item.url.path] ?? false
@@ -217,14 +219,9 @@ private extension VideoLibraryViewModel {
     /// - 切換收藏（add/remove + save）之後，只要再次呼叫本方法，當前畫面的 `items[index].isFavorite` 就會與 FavoriteStoreState 一致
     func syncFavoritesToItems() {
         
-        let favoriteURLs = Set(favoriteStore.favorite.keys)
-        
         for index in items.indices {
-            
             let url = items[index].url
-            let isFavorite = favoriteURLs.contains(url)
-            
-            items[index].isFavorite = isFavorite
+            items[index].isFavorite = favoriteStore.contains(url)
         }
     }
 }
