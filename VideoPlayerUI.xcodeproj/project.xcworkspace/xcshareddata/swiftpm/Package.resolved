@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWFileService",
       "state" : {
-        "revision" : "875e7207ca9c4e9c131a6bcc36322bfa2a16fcf9",
-        "version" : "1.2.2"
+        "revision" : "8bde27fb0696968b9220737ec9edd36a151e7812",
+        "version" : "1.2.3"
       }
     },
     {

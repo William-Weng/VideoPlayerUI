@@ -32,12 +32,12 @@ enum MainTab: Hashable {
 /// 影片尺寸分類
 enum SizeType: Hashable {
     
-    case SD     // 720x480 (480p)
-    case HD     // 1280x720 (720p)
-    case FHD    // 1920x1080 (1080p)
-    case _2K    // 2560x1440 (1440p)
-    case _4K    // 3840x2160 (2160p)
-    case _8K    // 7680x4320 (4320p)
+    case SD         // 720x480 (480p)
+    case HD         // 1280x720 (720p)
+    case FHD        // 1920x1080 (1080p)
+    case `2K`       // 2560x1440 (1440p)
+    case `4K`       // 3840x2160 (2160p)
+    case `8K`       // 7680x4320 (4320p)
     
     /// 根據影片尺寸轉成SizeType
     /// - Parameter size: CGSize
@@ -45,9 +45,9 @@ enum SizeType: Hashable {
         
         let value = min(size.width, size.height)
         
-        if value > 4300 { self = ._8K; return }
-        if value > 2100 { self = ._4K; return }
-        if value > 1400 { self = ._2K; return }
+        if value > 4300 { self = .`8K`; return }
+        if value > 2100 { self = .`2K`; return }
+        if value > 1400 { self = .`2K`; return }
         if value > 1000 { self = .FHD; return }
         if value > 700 { self = .HD; return }
         self = .SD
@@ -64,9 +64,9 @@ extension SizeType {
         case .SD: return "SD"
         case .HD: return "HD"
         case .FHD: return "FHD"
-        case ._2K: return "2K"
-        case ._4K: return "4K"
-        case ._8K: return "8K"
+        case .`2K`: return "2K"
+        case .`4K`: return "4K"
+        case .`8K`: return "8K"
         }
     }
     
@@ -80,9 +80,9 @@ extension SizeType {
         case .SD: return .gray
         case .HD: return .blue
         case .FHD: return .red
-        case ._2K: return .blue
-        case ._4K: return .brown
-        case ._8K: return .indigo
+        case .`2K`: return .blue
+        case .`4K`: return .brown
+        case .`8K`: return .indigo
         }
     }
 }

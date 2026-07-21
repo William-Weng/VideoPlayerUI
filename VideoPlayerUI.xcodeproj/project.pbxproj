@@ -401,7 +401,7 @@
 			repositoryURL = "https://github.com/William-Weng/WWFileService";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.2.2;
+				minimumVersion = 1.2.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
